@@ -1,6 +1,6 @@
-==============
-metoffer v.2.0
-==============
+================
+ metoffer v.2.0
+================
 
 metoffer is a simple wrapper for the API provided by the British
 `Met Office <http://www.metoffice.gov.uk>`_ known as DataPoint. It
@@ -9,6 +9,8 @@ heart is the ``MetOffer`` class which has methods to retrieve data
 available through the API and make them available as Python objects.
 Also included are a couple of functions and classes useful for
 interpretting the data.
+
+This project is now maintained at `<https://github.com/sludgedesk/metoffer>`_.
 
 Example
 -------
@@ -173,7 +175,7 @@ The TextForecast Class
 ----------------------
 
 A hold-all for returned textual regional forecasts, including associated meta-
-data, created by parsing the data returned by MetOffer.text_forecast.
+data, created by parsing the data returned by ``MetOffer.text_forecast``.
 
 Useful Functions
 ----------------
