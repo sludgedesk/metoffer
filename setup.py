@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='MetOffer',
-    version='1.3.2',
+    version='2.0',
     author='Stephen B Murray',
     author_email='sbm199@gmail.com',
     py_modules=['metoffer'],
