@@ -1,6 +1,6 @@
-================
-metoffer v.1.3.2
-================
+==============
+metoffer v.2.0
+==============
 
 metoffer is a simple wrapper for the API provided by the British
 `Met Office <http://www.metoffice.gov.uk>`_ known as DataPoint. It
@@ -28,7 +28,7 @@ about Met Office sites) may be cached.*
 
 Parse this data into a ``metoffer.Weather`` instance::
 
-	>>> y = metoffer.parse_val(x)
+	>>> y = metoffer.Weather(x)
 	>>> y.name
 	'HAMPTON COURT PALACE'
 	>>> y.country
@@ -150,7 +150,30 @@ value through Pythagorean theorem.
 The Weather Class
 -----------------
 
-A hold-all for returned weather data, including associated metadata.
+A hold-all for returned weather data, including associated metadata.  It parses
+returned dict of MetOffer location-specific data into a Weather instance.
+Works with single or multiple time steps.  There are a couple of points to
+note:
+
+* All dict keys have a tuple, even where there is no obvious need, such as
+  with 'timestamp' and 'Weather Type'.  'timestamp' is a 2-tuple, all else
+  is a 3-tuple.  This is a feature.
+
+* When the Met Office does not have a recorded observation against a category,
+  metoffer will return None.
+
+* For parsed DAILY forecasts, the hours and minutes of the 'timestamp'
+  datetime.datetime object are superfluous.  In fact, it would be misleading
+  to follow them.  Rather, this time there is a sensible entry in the second
+  part of the tuple.  This alternates between 'Day' and 'Night' with each
+  successive dict.  The categories are often specific to the time of day.
+  This is how the API provides it.  Take note as it may catch you out.
+
+The TextForecast Class
+----------------------
+
+A hold-all for returned textual regional forecasts, including associated meta-
+data, created by parsing the data returned by MetOffer.text_forecast.
 
 Useful Functions
 ----------------
@@ -160,25 +183,7 @@ Useful Functions
 * ``get_nearest_site``. Return a list of strings (site IDs) which can be used
   as 'request' in calls to ``loc_forecast`` and ``loc_observations``.
 
-* ``parse_val``. Parse returned dict of MetOffer location-specific data into a
-  Weather instance.  Works with single or multiple time steps.  There are a
-  couple of points to note:
-
-  * All dict keys have a tuple, even where there is no obvious need, such as
-    with 'timestamp' and 'Weather Type'.  'timestamp' is a 2-tuple, all else
-    is a 3-tuple.  This is a feature.
-
-  * When the Met Office does not have a recorded observation against a category,
-    metoffer will return None.
-
-  * For parsed DAILY forecasts, the hours and minutes of the 'timestamp'
-    datetime.datetime object are superfluous.  In fact, it would be misleading
-    to follow them.  Rather, this time there is a sensible entry in the second
-    part of the tuple.  This alternates between 'Day' and 'Night' with each
-    successive dict.  The categories are often specific to the time of day.
-    This is how the API provides it.  Take note as it may catch you out.
-
-*  ``guidance_UV``. Return Met Office guidance regarding UV exposure based on UV
+* ``guidance_UV``. Return Met Office guidance regarding UV exposure based on UV
    index.
 
 * ``extract_data_key``. Returns a dict that maps measurement type to its description
