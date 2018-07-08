@@ -382,6 +382,8 @@ class Weather():
                         dt = (date + datetime.timedelta(seconds=int(rep["$"]) * 60), "")  # dt always a tuple
                     except(ValueError):
                         dt = (date, rep["$"])  # Used for "DAILY" (time) step
+                    except(KeyError):
+                        dt = (date, "") 
                     del rep["$"]
                     weather = {"timestamp": dt}
                     for n in rep:
@@ -408,7 +410,7 @@ class Weather():
         data_key = extract_data_key(returned_data)
         self.data = []
         for weather in _weather_dict_gen(returned_data, data_key):
-            data.append(weather)
+            self.data.append(weather)
 
 
 class TextForecast():
