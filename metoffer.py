@@ -14,7 +14,7 @@ this data in a handy Python format.
 
                         *    *    *
 
-Copyright 2012-2014, 2018 Stephen B Murray
+Copyright 2012-2014, 2018 Stephen B Murray #  TODO
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
 
-__version__ = "2.0"
+__version__ = "2.0"  # TODO
 __author__ = "Stephen B Murray <sbm199@gmail.com>"
 
 
@@ -42,11 +42,11 @@ import operator
 try:
     import urllib.request as url_lib
 except ImportError:
-    import urllib2 as url_lib
+    import urllib2 as url_lib  # TODO Python 2.x? Seriously? Still?
 
 
 HOST = "http://datapoint.metoffice.gov.uk/public/data"
-
+USER_AGENT = "Mozilla/5.0"  # because default "Python-urllib/[ver]" gets HTTP response 403 where it never used to.
 
 # Data categories
 VAL = "val"             # Location-specific data
@@ -172,7 +172,7 @@ def guidance_UV(index):
     return guidance
 
 
-class MetOffer():
+class MetOffer:
     def __init__(self, key):
         self.key = key
 
@@ -183,7 +183,8 @@ class MetOffer():
         rest_url = "/".join([HOST, data_category, resource_category, field, DATA_TYPE, request])
         query_string = "?" + "&".join(["res=" + step, "time=" + isotime if isotime is not None else "", "key=" + self.key])
         url = rest_url + query_string
-        page = url_lib.urlopen(url)
+        urlrequestobj = url_lib.Request(url, data=None, headers={"User-Agent": USER_AGENT})
+        page = url_lib.urlopen(urlrequestobj)  # Edited to solve 403 issue ver 2.1
         pg = page.read()
         return pg
     
@@ -225,7 +226,6 @@ class MetOffer():
         sites = parse_sitelist(sitelist)
         site = get_nearest_site(sites, lat, lon)
         return self.loc_forecast(site, step)
-        
 
     def loc_observations(self, request):
         """
@@ -301,7 +301,7 @@ class MetOffer():
         return json.loads(self._query(LAYER, OBSERVATIONS, ALL, CAPABILITIES, "").decode(errors="replace"))
 
 
-class Site():
+class Site:
     """
     Describes object to hold site metadata.  Also describes method
     to return a Site instance's 'distance' from any given lat & lon
@@ -408,7 +408,7 @@ class Weather():
         data_key = extract_data_key(returned_data)
         self.data = []
         for weather in _weather_dict_gen(returned_data, data_key):
-            data.append(weather)
+            self.data.append(weather)
 
 
 class TextForecast():
