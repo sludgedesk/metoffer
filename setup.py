@@ -13,10 +13,10 @@ setuptools.setup(
     author_email="sbm199@gmail.com",
     description="Simple wrapper for the Met Office DataPoint API.",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     url="https://github.com/sludgedesk/metoffer",
     license="LGPLv3+",
-    packages=setuptools.find_packages(),
+    py_modules=["metoffer"],
     package_data={"": ["*.txt", "*.rst"]},
     classifiers=(
         "Programming Language :: Python :: 3",
