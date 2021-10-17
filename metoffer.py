@@ -382,6 +382,8 @@ class Weather():
                         dt = (date + datetime.timedelta(seconds=int(rep["$"]) * 60), "")  # dt always a tuple
                     except(ValueError):
                         dt = (date, rep["$"])  # Used for "DAILY" (time) step
+                    except(KeyError):
+                        dt = (date, "") 
                     del rep["$"]
                     weather = {"timestamp": dt}
                     for n in rep:
